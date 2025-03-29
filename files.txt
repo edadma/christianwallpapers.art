@@ -1,0 +1,20 @@
+; christianwallpapers.art code
+
+# app sources
+./src/main/scala/io/github/edadma/fluxus/pdf/examples
+main.scala
+MockData.scala
+
+# build files
+./
+build.sbt
+main.js
+package.json
+tailwind.config.js
+vite.config.js
+./project
+plugins.sbt
+
+# docs
+./
+README.md
