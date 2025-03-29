@@ -1,7 +1,7 @@
 ; christianwallpapers.art code
 
 # app sources
-./src/main/scala/io/github/edadma/fluxus/pdf/examples
+./src/main/scala/io/github/edadma/christianwallpapers/art
 main.scala
 MockData.scala
 
