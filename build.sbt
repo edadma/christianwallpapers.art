@@ -2,12 +2,12 @@ ThisBuild / licenses += "MIT"  -> url("https://opensource.org/licenses/MIT")
 ThisBuild / versionScheme      := Some("semver-spec")
 ThisBuild / evictionErrorLevel := Level.Warn
 
-lazy val fluxus_template = project
+lazy val christianwallpapers_art = project
   .in(file("."))
   .enablePlugins(ScalaJSPlugin)
 //  .enablePlugins(ScalablyTypedConverterPlugin)
   .settings(
-    name         := "fluxus-template",
+    name         := "christianwallpapers.art",
     version      := "0.0.1",
     scalaVersion := "3.6.4",
     organization := "io.github.edadma",
