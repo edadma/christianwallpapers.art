@@ -4,6 +4,7 @@
 ./src/main/scala/io/github/edadma/christianwallpapers/art
 main.scala
 MockData.scala
+Select.scala
 
 # build files
 ./
