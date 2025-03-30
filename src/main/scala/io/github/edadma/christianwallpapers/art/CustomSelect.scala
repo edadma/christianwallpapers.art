@@ -1,3 +1,4 @@
+// CustomSelect.scala (add this to your package)
 package io.github.edadma.christianwallpapers.art
 
 import io.github.edadma.fluxus._
