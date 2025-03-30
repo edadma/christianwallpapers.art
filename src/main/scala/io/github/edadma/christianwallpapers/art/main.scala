@@ -7,6 +7,36 @@ import com.raquo.airstream.state.Var
 import com.raquo.airstream.core.Transaction
 import scala.scalajs.js.URIUtils
 
+val aspectRatioSignal = Var("")
+val dimensionsSignal  = Var("")
+val categorySignal    = Var("")
+val artistSignal      = Var("")
+val sortBySignal      = Var("popular")
+
+// Function to initialize signals from URL params
+def initFromQueryParams(params: Map[String, String]): Unit = {
+  Transaction { _ =>
+    aspectRatioSignal.set(params.getOrElse("aspect", ""))
+    dimensionsSignal.set(params.getOrElse("dimensions", ""))
+    categorySignal.set(params.getOrElse("category", ""))
+    artistSignal.set(params.getOrElse("artist", ""))
+    sortBySignal.set(params.getOrElse("sort", "popular"))
+  }
+}
+
+// Function to update URL with current signal values
+def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
+  val params = Map[String, String]()
+    .updated("aspect", aspectRatioSignal.now())
+    .updated("dimensions", dimensionsSignal.now())
+    .updated("category", categorySignal.now())
+    .updated("artist", artistSignal.now())
+    .updated("sort", sortBySignal.now())
+    .filter(_._2.nonEmpty) // Remove empty values
+
+  updateUrl(params)
+}
+
 @main def run(): Unit = {
   // Render the app to the DOM
   render(App, "app")
@@ -14,25 +44,35 @@ import scala.scalajs.js.URIUtils
   // App Component
   def App: FluxusNode = {
     // Parse URL params for initial state
-    val initialParams = parseQueryParams()
+    useEffect(
+      () => {
+        val initialParams = parseQueryParams()
+        initFromQueryParams(initialParams)
 
-    // State for filters using signals
-    val aspectRatioSignal = Var(initialParams.getOrElse("aspect", ""))
-    val dimensionsSignal  = Var(initialParams.getOrElse("dimensions", ""))
-    val categorySignal    = Var(initialParams.getOrElse("category", ""))
-    val artistSignal      = Var(initialParams.getOrElse("artist", ""))
-    val sortBySignal      = Var(initialParams.getOrElse("sort", "popular"))
+        // Handle browser navigation events
+        val handler = (_: dom.Event) => {
+          val params = parseQueryParams()
+          initFromQueryParams(params)
+        }
+
+        window.addEventListener("popstate", handler)
+
+        // Cleanup
+        () => window.removeEventListener("popstate", handler)
+      },
+      Seq(), // Empty deps = run once on mount
+    )
 
     // Use signals in component
-//    val aspectRatio = useSignal(aspectRatioSignal)
-//    val dimensions  = useSignal(dimensionsSignal)
-//    val category    = useSignal(categorySignal)
-//    val artist      = useSignal(artistSignal)
-//    val sortBy      = useSignal(sortBySignal)
+    val aspectRatio = useSignal(aspectRatioSignal)
+    val dimensions  = useSignal(dimensionsSignal)
+    val category    = useSignal(categorySignal)
+    val artist      = useSignal(artistSignal)
+    val sortBy      = useSignal(sortBySignal)
 
     // Determine if we're showing filtered content
-//    val isFiltered = aspectRatio.nonEmpty || dimensions.nonEmpty ||
-//      category.nonEmpty || artist.nonEmpty || sortBy != "popular"
+    val isFiltered = aspectRatio.nonEmpty || dimensions.nonEmpty ||
+      category.nonEmpty || artist.nonEmpty || sortBy != "popular"
 
     // Handle filter changes
     def updateFilter(key: String, value: String): Unit = {
@@ -77,24 +117,24 @@ import scala.scalajs.js.URIUtils
     div(
       Navbar <> (),
       HeroSection <> (),
-//      FilterBar <> FilterBarProps(
-//        aspect = aspectRatio,
-//        dimensions = dimensions,
-//        category = category,
-//        artist = artist,
-//        sortBy = sortBy,
-//        onFilterChange = updateFilter,
-//      ),
-//      if (isFiltered)
-//        FilteredContent <> FilteredContentProps(
-//          aspect = aspectRatio,
-//          dimensions = dimensions,
-//          category = category,
-//          artist = artist,
-//          sortBy = sortBy,
-//        )
-//      else
-      HomeContent <> (),
+      FilterBar <> FilterBarProps(
+        aspect = aspectRatio,
+        dimensions = dimensions,
+        category = category,
+        artist = artist,
+        sortBy = sortBy,
+        onFilterChange = updateFilter,
+      ),
+      if (isFiltered)
+        FilteredContent <> FilteredContentProps(
+          aspect = aspectRatio,
+          dimensions = dimensions,
+          category = category,
+          artist = artist,
+          sortBy = sortBy,
+        )
+      else
+        HomeContent <> (),
       Footer <> (),
     )
   }
