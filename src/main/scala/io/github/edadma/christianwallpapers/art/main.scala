@@ -13,7 +13,7 @@ import scala.scalajs.js.URIUtils
   render(App, "app")
 
   // App Component
-  def App = () => {
+  def App: FluxusNode = {
     // Parse URL params for initial state
     val initialParams = parseQueryParams()
 
