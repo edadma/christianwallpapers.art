@@ -24,15 +24,15 @@ import scala.scalajs.js.URIUtils
     val sortBySignal      = Var(initialParams.getOrElse("sort", "popular"))
 
     // Use signals in component
-    val aspectRatio = useSignal(aspectRatioSignal)
-    val dimensions  = useSignal(dimensionsSignal)
-    val category    = useSignal(categorySignal)
-    val artist      = useSignal(artistSignal)
-    val sortBy      = useSignal(sortBySignal)
+//    val aspectRatio = useSignal(aspectRatioSignal)
+//    val dimensions  = useSignal(dimensionsSignal)
+//    val category    = useSignal(categorySignal)
+//    val artist      = useSignal(artistSignal)
+//    val sortBy      = useSignal(sortBySignal)
 
     // Determine if we're showing filtered content
-    val isFiltered = aspectRatio.nonEmpty || dimensions.nonEmpty ||
-      category.nonEmpty || artist.nonEmpty || sortBy != "popular"
+//    val isFiltered = aspectRatio.nonEmpty || dimensions.nonEmpty ||
+//      category.nonEmpty || artist.nonEmpty || sortBy != "popular"
 
     // Handle filter changes
     def updateFilter(key: String, value: String): Unit = {
@@ -75,27 +75,27 @@ import scala.scalajs.js.URIUtils
     )
 
     div(
-      Navbar,
-      HeroSection,
-      FilterBar <> FilterBarProps(
-        aspect = aspectRatio,
-        dimensions = dimensions,
-        category = category,
-        artist = artist,
-        sortBy = sortBy,
-        onFilterChange = updateFilter,
-      ),
-      if (isFiltered)
-        FilteredContent <> FilteredContentProps(
-          aspect = aspectRatio,
-          dimensions = dimensions,
-          category = category,
-          artist = artist,
-          sortBy = sortBy,
-        )
-      else
-        HomeContent,
-      Footer,
+      Navbar <> (),
+      HeroSection <> (),
+//      FilterBar <> FilterBarProps(
+//        aspect = aspectRatio,
+//        dimensions = dimensions,
+//        category = category,
+//        artist = artist,
+//        sortBy = sortBy,
+//        onFilterChange = updateFilter,
+//      ),
+//      if (isFiltered)
+//        FilteredContent <> FilteredContentProps(
+//          aspect = aspectRatio,
+//          dimensions = dimensions,
+//          category = category,
+//          artist = artist,
+//          sortBy = sortBy,
+//        )
+//      else
+      HomeContent <> (),
+      Footer <> (),
     )
   }
 
@@ -214,7 +214,7 @@ import scala.scalajs.js.URIUtils
       onFilterChange: (String, String) => Unit,
   )
 
-  def FilterBar(props: FilterBarProps) = {
+  def FilterBar = (props: FilterBarProps) => {
     div(
       cls := "bg-base-200 p-4",
       div(
