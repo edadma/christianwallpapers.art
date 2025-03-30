@@ -245,8 +245,6 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
   }
 
   // Filter Bar Component
-  // Filter Bar Component
-  // Filter Bar Component
   case class FilterBarProps(
       aspect: String,
       dimensions: String,
@@ -266,21 +264,38 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
           cls := "flex flex-wrap items-center gap-2 mb-3",
 
           // Aspect Ratio filter
+          // Aspect Ratio filter with inline clear button
           div(
             cls := "flex-1 min-w-[180px]",
-            select(
-              cls   := "select select-bordered w-full",
-              value := props.aspect,
-              onChange := ((e: dom.Event) =>
-                props.onFilterChange("aspect", e.target.asInstanceOf[dom.html.Select].value)
+            div(
+              cls := "relative w-full",
+              // Select element with z-index to ensure it's below the clear button
+              select(
+                cls   := "select select-bordered w-full pr-8", // Added padding-right to make room for the button
+                value := props.aspect,
+                onChange := ((e: dom.Event) =>
+                  props.onFilterChange("aspect", e.target.asInstanceOf[dom.html.Select].value)
+                ),
+                option(value := "", disabled      := true, selected := props.aspect.isEmpty, "Aspect Ratio"),
+                option(value := "16:9", selected  := props.aspect == "16:9", "16:9 (Desktop)"),
+                option(value := "9:16", selected  := props.aspect == "9:16", "9:16 (Mobile)"),
+                option(value := "4:3", selected   := props.aspect == "4:3", "4:3 (Tablet)"),
+                option(value := "3:2", selected   := props.aspect == "3:2", "3:2 (Desktop)"),
+                option(value := "16:10", selected := props.aspect == "16:10", "16:10 (Desktop)"),
+                option(value := "1:1", selected   := props.aspect == "1:1", "1:1 (Square)"),
               ),
-              option(value := "", disabled      := true, selected := props.aspect.isEmpty, "Aspect Ratio"),
-              option(value := "16:9", selected  := props.aspect == "16:9", "16:9 (Desktop)"),
-              option(value := "9:16", selected  := props.aspect == "9:16", "9:16 (Mobile)"),
-              option(value := "4:3", selected   := props.aspect == "4:3", "4:3 (Tablet)"),
-              option(value := "3:2", selected   := props.aspect == "3:2", "3:2 (Desktop)"),
-              option(value := "16:10", selected := props.aspect == "16:10", "16:10 (Desktop)"),
-              option(value := "1:1", selected   := props.aspect == "1:1", "1:1 (Square)"),
+              // Absolutely positioned clear button with higher z-index
+              if (props.aspect.nonEmpty)
+                button(
+                  cls := "absolute right-3 top-1/2 -translate-y-1/2 z-10 h-4 w-4 flex items-center justify-center rounded-full bg-gray-300 text-gray-700 hover:bg-gray-400",
+                  onClick := ((e: dom.Event) => {
+                    e.stopPropagation() // Prevent triggering select dropdown
+                    props.onFilterChange("aspect", "")
+                  }),
+                  "×",
+                )
+              else
+                null,
             ),
           ),
 
