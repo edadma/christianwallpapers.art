@@ -266,7 +266,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
           // aspect ratio
           div(
             cls := "flex-1 min-w-[180px]",
-            CustomSelect <> CustomSelectProps(
+            Select <> SelectProps(
               value = props.aspect,
               options = Seq(
                 SelectOption("16:9", "16:9 (Desktop)"),

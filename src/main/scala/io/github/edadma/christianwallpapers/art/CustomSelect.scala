@@ -3,13 +3,12 @@ package io.github.edadma.christianwallpapers.art
 
 import io.github.edadma.fluxus._
 import org.scalajs.dom
-import scala.scalajs.js.timers.setTimeout
 
 // Define the option type
 case class SelectOption(value: String, label: String)
 
 // Define props as a case class
-case class CustomSelectProps(
+case class SelectProps(
     value: String,
     options: Seq[SelectOption],
     placeholder: String,
@@ -17,7 +16,7 @@ case class CustomSelectProps(
     className: String = "",
 )
 
-def CustomSelect = (props: CustomSelectProps) => {
+def Select = (props: SelectProps) => {
   val (isOpen, setIsOpen, _) = useState(false)
   val dropdownRef            = useRef[dom.html.Div]()
 
