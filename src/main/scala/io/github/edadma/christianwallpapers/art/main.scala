@@ -1,9 +1,8 @@
 package io.github.edadma.christianwallpapers.art
 
 import io.github.edadma.fluxus._
-import io.github.edadma.fluxus.core._
 import org.scalajs.dom
-import org.scalajs.dom.{document, window}
+import org.scalajs.dom.window
 import com.raquo.airstream.state.Var
 import com.raquo.airstream.core.Transaction
 import scala.scalajs.js.URIUtils
