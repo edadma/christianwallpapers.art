@@ -456,7 +456,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
       sortBy: String,
   )
 
-  def FilteredContent(props: FilteredContentProps) = {
+  def FilteredContent = (props: FilteredContentProps) => {
     // Get filtered wallpapers
     val wallpapers = mockFilterWallpapers(props.aspect, props.dimensions, props.category, props.artist, props.sortBy)
 
@@ -521,7 +521,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
   }
 
   // Wallpaper Card Component
-  def WallpaperCard(wallpaper: Wallpaper) = {
+  def WallpaperCard = (wallpaper: Wallpaper) => {
     div(
       cls := "card card-compact bg-base-100 shadow-xl",
       figure(img(src := wallpaper.imageUrl, alt := wallpaper.title)),
@@ -542,7 +542,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
   }
 
   // Artist Card Component
-  def ArtistCard(artist: Artist) = {
+  def ArtistCard = (artist: Artist) => {
     div(
       cls := "card card-compact w-64 bg-base-100 shadow-xl",
       figure(
