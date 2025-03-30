@@ -228,7 +228,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
       div(
         cls := "hero-content text-center",
         div(
-          cls := "max-w-md",
+          cls := "max-w-lg",
           h1(cls := "text-5xl font-bold", "Beautiful Christian Art"),
           p(
             cls := "py-6",
