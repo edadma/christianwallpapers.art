@@ -266,18 +266,19 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
           // aspect ratio
           div(
             cls := "flex-1 min-w-[180px]",
-            Select <> SelectProps(
-              value = props.aspect,
-              options = Seq(
-                SelectOption("16:9", "16:9 (Desktop)"),
-                SelectOption("9:16", "9:16 (Mobile)"),
-                SelectOption("4:3", "4:3 (Tablet)"),
-                SelectOption("3:2", "3:2 (Desktop)"),
-                SelectOption("16:10", "16:10 (Desktop)"),
-                SelectOption("1:1", "1:1 (Square)"),
+            select(
+              cls   := "select select-bordered w-full",
+              value := props.aspect,
+              onChange := ((e: dom.Event) =>
+                props.onFilterChange("aspect", e.target.asInstanceOf[dom.html.Select].value)
               ),
-              placeholder = "Aspect Ratio",
-              onChange = (value: String) => props.onFilterChange("aspect", value),
+              option(value := "", selected      := props.aspect.isEmpty, "Aspect Ratio"),
+              option(value := "16:9", selected  := props.aspect == "16:9", "16:9 (Desktop)"),
+              option(value := "9:16", selected  := props.aspect == "9:16", "9:16 (Mobile)"),
+              option(value := "4:3", selected   := props.aspect == "4:3", "4:3 (Tablet)"),
+              option(value := "3:2", selected   := props.aspect == "3:2", "3:2 (Desktop)"),
+              option(value := "16:10", selected := props.aspect == "16:10", "16:10 (Desktop)"),
+              option(value := "1:1", selected   := props.aspect == "1:1", "1:1 (Square)"),
             ),
           ),
 
@@ -290,7 +291,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
               onChange := ((e: dom.Event) =>
                 props.onFilterChange("dimensions", e.target.asInstanceOf[dom.html.Select].value)
               ),
-              option(value := "", disabled          := true, selected := props.dimensions.isEmpty, "Dimensions"),
+              option(value := "", selected          := props.dimensions.isEmpty, "Dimensions"),
               option(value := "1920x1080", selected := props.dimensions == "1920x1080", "1920x1080 (FHD)"),
               option(value := "2560x1440", selected := props.dimensions == "2560x1440", "2560x1440 (QHD)"),
               option(value := "3840x2160", selected := props.dimensions == "3840x2160", "3840x2160 (4K)"),
@@ -309,7 +310,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
               onChange := ((e: dom.Event) =>
                 props.onFilterChange("category", e.target.asInstanceOf[dom.html.Select].value)
               ),
-              option(value := "", disabled          := true, selected := props.category.isEmpty, "Categories"),
+              option(value := "", selected          := props.category.isEmpty, "Categories"),
               option(value := "scripture", selected := props.category == "scripture", "Scripture"),
               option(value := "nature", selected    := props.category == "nature", "Nature"),
               option(value := "cross", selected     := props.category == "cross", "Cross"),
@@ -327,7 +328,7 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
               onChange := ((e: dom.Event) =>
                 props.onFilterChange("artist", e.target.asInstanceOf[dom.html.Select].value)
               ),
-              option(value := "", disabled                := true, selected := props.artist.isEmpty, "Artists"),
+              option(value := "", selected                := props.artist.isEmpty, "Artists"),
               option(value := "all", selected             := props.artist == "all", "All Artists"),
               option(value := "GraceArtistry", selected   := props.artist == "GraceArtistry", "GraceArtistry"),
               option(value := "FaithDesigns", selected    := props.artist == "FaithDesigns", "FaithDesigns"),
