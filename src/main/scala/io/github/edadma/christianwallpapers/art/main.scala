@@ -245,6 +245,8 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
   }
 
   // Filter Bar Component
+  // Filter Bar Component
+  // Filter Bar Component
   case class FilterBarProps(
       aspect: String,
       dimensions: String,
@@ -258,80 +260,106 @@ def updateQueryParams(updateUrl: Map[String, String] => Unit): Unit = {
     div(
       cls := "bg-base-200 p-4",
       div(
-        cls := "container mx-auto flex flex-wrap gap-2 justify-between items-center",
+        cls := "container mx-auto",
         div(
-          cls := "flex flex-wrap gap-2",
-          select(
-            cls   := "select select-bordered w-full max-w-xs",
-            value := props.aspect,
-            onChange := ((e: dom.Event) =>
-              props.onFilterChange("aspect", e.target.asInstanceOf[dom.html.Select].value)
+          // Make filters display horizontally with flex and responsive layout
+          cls := "flex flex-wrap items-center gap-2 mb-3",
+
+          // Aspect Ratio filter
+          div(
+            cls := "flex-1 min-w-[180px]",
+            select(
+              cls   := "select select-bordered w-full",
+              value := props.aspect,
+              onChange := ((e: dom.Event) =>
+                props.onFilterChange("aspect", e.target.asInstanceOf[dom.html.Select].value)
+              ),
+              option(value := "", disabled      := true, selected := props.aspect.isEmpty, "Aspect Ratio"),
+              option(value := "16:9", selected  := props.aspect == "16:9", "16:9 (Desktop)"),
+              option(value := "9:16", selected  := props.aspect == "9:16", "9:16 (Mobile)"),
+              option(value := "4:3", selected   := props.aspect == "4:3", "4:3 (Tablet)"),
+              option(value := "3:2", selected   := props.aspect == "3:2", "3:2 (Desktop)"),
+              option(value := "16:10", selected := props.aspect == "16:10", "16:10 (Desktop)"),
+              option(value := "1:1", selected   := props.aspect == "1:1", "1:1 (Square)"),
             ),
-            option(disabled := true, selected    := props.aspect.isEmpty, "Aspect Ratio"),
-            option(value    := "16:9", selected  := props.aspect == "16:9", "16:9 (Desktop)"),
-            option(value    := "9:16", selected  := props.aspect == "9:16", "9:16 (Mobile)"),
-            option(value    := "4:3", selected   := props.aspect == "4:3", "4:3 (Tablet)"),
-            option(value    := "3:2", selected   := props.aspect == "3:2", "3:2 (Desktop)"),
-            option(value    := "16:10", selected := props.aspect == "16:10", "16:10 (Desktop)"),
-            option(value    := "1:1", selected   := props.aspect == "1:1", "1:1 (Square)"),
           ),
-          select(
-            cls   := "select select-bordered w-full max-w-xs",
-            value := props.dimensions,
-            onChange := ((e: dom.Event) =>
-              props.onFilterChange("dimensions", e.target.asInstanceOf[dom.html.Select].value)
+
+          // Dimensions filter
+          div(
+            cls := "flex-1 min-w-[180px]",
+            select(
+              cls   := "select select-bordered w-full",
+              value := props.dimensions,
+              onChange := ((e: dom.Event) =>
+                props.onFilterChange("dimensions", e.target.asInstanceOf[dom.html.Select].value)
+              ),
+              option(value := "", disabled          := true, selected := props.dimensions.isEmpty, "Dimensions"),
+              option(value := "1920x1080", selected := props.dimensions == "1920x1080", "1920x1080 (FHD)"),
+              option(value := "2560x1440", selected := props.dimensions == "2560x1440", "2560x1440 (QHD)"),
+              option(value := "3840x2160", selected := props.dimensions == "3840x2160", "3840x2160 (4K)"),
+              option(value := "1920x1200", selected := props.dimensions == "1920x1200", "1920x1200"),
+              option(value := "1280x720", selected  := props.dimensions == "1280x720", "1280x720 (HD)"),
+              option(value := "750x1334", selected  := props.dimensions == "750x1334", "750x1334 (iPhone)"),
             ),
-            option(disabled := true, selected        := props.dimensions.isEmpty, "Dimensions"),
-            option(value    := "1920x1080", selected := props.dimensions == "1920x1080", "1920x1080 (FHD)"),
-            option(value    := "2560x1440", selected := props.dimensions == "2560x1440", "2560x1440 (QHD)"),
-            option(value    := "3840x2160", selected := props.dimensions == "3840x2160", "3840x2160 (4K)"),
-            option(value    := "1920x1200", selected := props.dimensions == "1920x1200", "1920x1200"),
-            option(value    := "1280x720", selected  := props.dimensions == "1280x720", "1280x720 (HD)"),
-            option(value    := "750x1334", selected  := props.dimensions == "750x1334", "750x1334 (iPhone)"),
           ),
-          select(
-            cls   := "select select-bordered w-full max-w-xs",
-            value := props.category,
-            onChange := ((e: dom.Event) =>
-              props.onFilterChange("category", e.target.asInstanceOf[dom.html.Select].value)
+
+          // Categories filter
+          div(
+            cls := "flex-1 min-w-[180px]",
+            select(
+              cls   := "select select-bordered w-full",
+              value := props.category,
+              onChange := ((e: dom.Event) =>
+                props.onFilterChange("category", e.target.asInstanceOf[dom.html.Select].value)
+              ),
+              option(value := "", disabled          := true, selected := props.category.isEmpty, "Categories"),
+              option(value := "scripture", selected := props.category == "scripture", "Scripture"),
+              option(value := "nature", selected    := props.category == "nature", "Nature"),
+              option(value := "cross", selected     := props.category == "cross", "Cross"),
+              option(value := "worship", selected   := props.category == "worship", "Worship"),
+              option(value := "abstract", selected  := props.category == "abstract", "Abstract"),
             ),
-            option(disabled := true, selected        := props.category.isEmpty, "Categories"),
-            option(value    := "scripture", selected := props.category == "scripture", "Scripture"),
-            option(value    := "nature", selected    := props.category == "nature", "Nature"),
-            option(value    := "cross", selected     := props.category == "cross", "Cross"),
-            option(value    := "worship", selected   := props.category == "worship", "Worship"),
-            option(value    := "abstract", selected  := props.category == "abstract", "Abstract"),
           ),
-          select(
-            cls   := "select select-bordered w-full max-w-xs",
-            value := props.artist,
-            onChange := ((e: dom.Event) =>
-              props.onFilterChange("artist", e.target.asInstanceOf[dom.html.Select].value)
+
+          // Artists filter
+          div(
+            cls := "flex-1 min-w-[180px]",
+            select(
+              cls   := "select select-bordered w-full",
+              value := props.artist,
+              onChange := ((e: dom.Event) =>
+                props.onFilterChange("artist", e.target.asInstanceOf[dom.html.Select].value)
+              ),
+              option(value := "", disabled                := true, selected := props.artist.isEmpty, "Artists"),
+              option(value := "all", selected             := props.artist == "all", "All Artists"),
+              option(value := "GraceArtistry", selected   := props.artist == "GraceArtistry", "GraceArtistry"),
+              option(value := "FaithDesigns", selected    := props.artist == "FaithDesigns", "FaithDesigns"),
+              option(value := "BlessedCreative", selected := props.artist == "BlessedCreative", "BlessedCreative"),
+              option(value := "DivineCrafts", selected    := props.artist == "DivineCrafts", "DivineCrafts"),
             ),
-            option(disabled := true, selected              := props.artist.isEmpty, "Artists"),
-            option(value    := "all", selected             := props.artist == "all", "All Artists"),
-            option(value    := "GraceArtistry", selected   := props.artist == "GraceArtistry", "GraceArtistry"),
-            option(value    := "FaithDesigns", selected    := props.artist == "FaithDesigns", "FaithDesigns"),
-            option(value    := "BlessedCreative", selected := props.artist == "BlessedCreative", "BlessedCreative"),
-            option(value    := "DivineCrafts", selected    := props.artist == "DivineCrafts", "DivineCrafts"),
           ),
-        ),
-        div(
-          cls := "join",
-          button(
-            cls     := s"btn join-item ${if (props.sortBy == "latest") "btn-active" else ""}",
-            onClick := (() => props.onFilterChange("sort", "latest")),
-            "Latest",
-          ),
-          button(
-            cls     := s"btn join-item ${if (props.sortBy == "popular") "btn-active" else ""}",
-            onClick := (() => props.onFilterChange("sort", "popular")),
-            "Popular",
-          ),
-          button(
-            cls     := s"btn join-item ${if (props.sortBy == "featured") "btn-active" else ""}",
-            onClick := (() => props.onFilterChange("sort", "featured")),
-            "Featured",
+
+          // Sort buttons
+          div(
+            cls := "flex-none",
+            div(
+              cls := "join",
+              button(
+                cls     := s"btn join-item ${if (props.sortBy == "latest") "btn-active" else ""}",
+                onClick := (() => props.onFilterChange("sort", "latest")),
+                "Latest",
+              ),
+              button(
+                cls     := s"btn join-item ${if (props.sortBy == "popular") "btn-active" else ""}",
+                onClick := (() => props.onFilterChange("sort", "popular")),
+                "Popular",
+              ),
+              button(
+                cls     := s"btn join-item ${if (props.sortBy == "featured") "btn-active" else ""}",
+                onClick := (() => props.onFilterChange("sort", "featured")),
+                "Featured",
+              ),
+            ),
           ),
         ),
       ),
