@@ -5,33 +5,33 @@ import java.util.Date
 
 // Model classes
 case class Wallpaper(
-                      id: String,
-                      title: String,
-                      artist: String,
-                      imageUrl: String,
-                      dimensions: String,
-                      aspectRatio: String,
-                      category: String,
-                      downloads: Int,
-                      dateAdded: Date,
-                      featured: Boolean
-                    )
+    id: String,
+    title: String,
+    artist: String,
+    imageUrl: String,
+    dimensions: String,
+    aspectRatio: String,
+    category: String,
+    downloads: Int,
+    dateAdded: Date,
+    featured: Boolean,
+)
 
 case class Artist(
-                   id: String,
-                   name: String,
-                   description: String,
-                   avatarUrl: String,
-                   totalWallpapers: Int,
-                   joinDate: Date
-                 )
+    id: String,
+    name: String,
+    description: String,
+    avatarUrl: String,
+    totalWallpapers: Int,
+    joinDate: Date,
+)
 
 case class Category(
-                     id: String,
-                     name: String,
-                     description: String,
-                     wallpaperCount: Int
-                   )
+    id: String,
+    name: String,
+    description: String,
+    wallpaperCount: Int,
+)
 
 // Mock data provider
 object MockData {
@@ -49,7 +49,7 @@ object MockData {
       description = "Creating scripture-based art since 2020",
       avatarUrl = "https://placehold.co/150x150?text=GA",
       totalWallpapers = 42,
-      joinDate = daysAgo(365)
+      joinDate = daysAgo(365),
     ),
     Artist(
       id = "2",
@@ -57,7 +57,7 @@ object MockData {
       description = "Digital artist specializing in mobile designs",
       avatarUrl = "https://placehold.co/150x150?text=FD",
       totalWallpapers = 38,
-      joinDate = daysAgo(300)
+      joinDate = daysAgo(300),
     ),
     Artist(
       id = "3",
@@ -65,7 +65,7 @@ object MockData {
       description = "Nature-inspired Christian photography",
       avatarUrl = "https://placehold.co/150x150?text=BC",
       totalWallpapers = 27,
-      joinDate = daysAgo(250)
+      joinDate = daysAgo(250),
     ),
     Artist(
       id = "4",
@@ -73,8 +73,8 @@ object MockData {
       description = "Abstract Christian symbolism artwork",
       avatarUrl = "https://placehold.co/150x150?text=DC",
       totalWallpapers = 19,
-      joinDate = daysAgo(180)
-    )
+      joinDate = daysAgo(180),
+    ),
   )
 
   // Sample categories
@@ -84,7 +84,7 @@ object MockData {
     Category(id = "3", name = "Nature", description = "God's creation", wallpaperCount = 38),
     Category(id = "4", name = "Worship", description = "Worship and prayer imagery", wallpaperCount = 27),
     Category(id = "5", name = "Abstract", description = "Abstract Christian art", wallpaperCount = 19),
-    Category(id = "6", name = "More", description = "Other categories", wallpaperCount = 23)
+    Category(id = "6", name = "More", description = "Other categories", wallpaperCount = 23),
   )
 
   // Sample wallpapers
@@ -100,7 +100,7 @@ object MockData {
       category = "scripture",
       downloads = 1254,
       dateAdded = daysAgo(45),
-      featured = true
+      featured = true,
     ),
     Wallpaper(
       id = "2",
@@ -112,7 +112,7 @@ object MockData {
       category = "cross",
       downloads = 982,
       dateAdded = daysAgo(60),
-      featured = true
+      featured = true,
     ),
     Wallpaper(
       id = "3",
@@ -124,7 +124,7 @@ object MockData {
       category = "scripture",
       downloads = 1087,
       dateAdded = daysAgo(75),
-      featured = true
+      featured = true,
     ),
     Wallpaper(
       id = "4",
@@ -136,7 +136,7 @@ object MockData {
       category = "abstract",
       downloads = 832,
       dateAdded = daysAgo(90),
-      featured = true
+      featured = true,
     ),
 
     // New wallpapers
@@ -149,4 +149,48 @@ object MockData {
       aspectRatio = "4:3",
       category = "scripture",
       downloads = 342,
-      dateAdded = daysA
+      dateAdded = daysAgo(7),
+      featured = false,
+    ),
+    Wallpaper(
+      id = "6",
+      title = "Word of Life",
+      artist = "GraceArtistry",
+      imageUrl = "https://placehold.co/640x480?text=WordOfLife",
+      dimensions = "1920x1080",
+      aspectRatio = "16:9",
+      category = "scripture",
+      downloads = 287,
+      dateAdded = daysAgo(10),
+      featured = false,
+    ),
+    Wallpaper(
+      id = "7",
+      title = "Mountain Faith",
+      artist = "BlessedCreative",
+      imageUrl = "https://placehold.co/640x480?text=MountainFaith",
+      dimensions = "2560x1440",
+      aspectRatio = "16:9",
+      category = "nature",
+      downloads = 198,
+      dateAdded = daysAgo(14),
+      featured = false,
+    ),
+    Wallpaper(
+      id = "8",
+      title = "Digital Cross",
+      artist = "DivineCrafts",
+      imageUrl = "https://placehold.co/640x480?text=DigitalCross",
+      dimensions = "750x1334",
+      aspectRatio = "9:16",
+      category = "cross",
+      downloads = 156,
+      dateAdded = daysAgo(18),
+      featured = false,
+    ),
+  )
+
+  // Create derived collections for convenience
+  val featuredWallpapers: Seq[Wallpaper] = allWallpapers.filter(_.featured)
+  val newWallpapers: Seq[Wallpaper]      = allWallpapers.sortBy(-_.dateAdded.getTime).take(4)
+}

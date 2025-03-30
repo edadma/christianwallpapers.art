@@ -6,6 +6,7 @@ import org.scalajs.dom
 import org.scalajs.dom.{document, window}
 import com.raquo.airstream.state.Var
 import com.raquo.airstream.core.Transaction
+import scala.scalajs.js.URIUtils
 
 @main def run(): Unit = {
   // Render the app to the DOM
@@ -77,7 +78,7 @@ import com.raquo.airstream.core.Transaction
     div(
       Navbar,
       HeroSection,
-      FilterBar(
+      FilterBar <> FilterBarProps(
         aspect = aspectRatio,
         dimensions = dimensions,
         category = category,
@@ -86,7 +87,7 @@ import com.raquo.airstream.core.Transaction
         onFilterChange = updateFilter,
       ),
       if (isFiltered)
-        FilteredContent(
+        FilteredContent <> FilteredContentProps(
           aspect = aspectRatio,
           dimensions = dimensions,
           category = category,
@@ -106,7 +107,7 @@ import com.raquo.airstream.core.Transaction
     else {
       queryString.split("&").map { param =>
         val parts = param.split("=")
-        if (parts.length > 1) parts(0) -> dom.decodeURIComponent(parts(1))
+        if (parts.length > 1) parts(0) -> URIUtils.decodeURIComponent(parts(1))
         else parts(0)                  -> ""
       }.toMap
     }
@@ -114,7 +115,7 @@ import com.raquo.airstream.core.Transaction
 
   def updateQueryParams(params: Map[String, String]): Unit = {
     val queryString = params.map { case (key, value) =>
-      s"$key=${dom.encodeURIComponent(value)}"
+      s"$key=${URIUtils.encodeURIComponent(value)}"
     }.mkString("&")
 
     val newUrl = if (queryString.isEmpty)
@@ -136,8 +137,8 @@ import com.raquo.airstream.core.Transaction
         div(
           cls := "dropdown",
           label(
-            tabindex := "0",
-            cls      := "btn btn-ghost lg:hidden",
+            "tabindex" := "0",
+            cls        := "btn btn-ghost lg:hidden",
             svg(
               xmlns   := "http://www.w3.org/2000/svg",
               cls     := "h-5 w-5",
@@ -145,16 +146,16 @@ import com.raquo.airstream.core.Transaction
               viewBox := "0 0 24 24",
               stroke  := "currentColor",
               path(
-                strokeLinecap  := "round",
-                strokeLinejoin := "round",
-                strokeWidth    := "2",
-                d              := "M4 6h16M4 12h8m-8 6h16",
+                "strokeLinecap"  := "round",
+                "strokeLinejoin" := "round",
+                "strokeWidth"    := "2",
+                d                := "M4 6h16M4 12h8m-8 6h16",
               ),
             ),
           ),
           ul(
-            tabindex := "0",
-            cls      := "menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-neutral",
+            "tabindex" := "0",
+            cls := "menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-neutral",
             li(a("Home")),
             li(a("Browse")),
             li(a("Artists")),
@@ -563,11 +564,11 @@ import com.raquo.airstream.core.Transaction
           cls := "grid grid-flow-col gap-4",
           a(
             svg(
-              xmlns   := "http://www.w3.org/2000/svg",
-              width   := "24",
-              height  := "24",
-              viewBox := "0 0 24 24",
-              cls     := "fill-current",
+              xmlns    := "http://www.w3.org/2000/svg",
+              "width"  := "24",
+              "height" := "24",
+              viewBox  := "0 0 24 24",
+              cls      := "fill-current",
               path(
                 d := "M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z",
               ),
@@ -575,11 +576,11 @@ import com.raquo.airstream.core.Transaction
           ),
           a(
             svg(
-              xmlns   := "http://www.w3.org/2000/svg",
-              width   := "24",
-              height  := "24",
-              viewBox := "0 0 24 24",
-              cls     := "fill-current",
+              xmlns    := "http://www.w3.org/2000/svg",
+              "width"  := "24",
+              "height" := "24",
+              viewBox  := "0 0 24 24",
+              cls      := "fill-current",
               path(
                 d := "M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z",
               ),
@@ -587,11 +588,11 @@ import com.raquo.airstream.core.Transaction
           ),
           a(
             svg(
-              xmlns   := "http://www.w3.org/2000/svg",
-              width   := "24",
-              height  := "24",
-              viewBox := "0 0 24 24",
-              cls     := "fill-current",
+              xmlns    := "http://www.w3.org/2000/svg",
+              "width"  := "24",
+              "height" := "24",
+              viewBox  := "0 0 24 24",
+              cls      := "fill-current",
               path(
                 d := "M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z",
               ),
