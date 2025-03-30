@@ -95,7 +95,9 @@ def Select = (props: SelectProps) => {
     // Dropdown menu
     if (isOpen)
       div(
-        cls := "absolute z-50 w-full mt-1 bg-base-100 shadow-lg rounded-lg overflow-hidden max-h-60 overflow-y-auto",
+        cls   := "absolute z-50 w-full bg-base-100 shadow-lg rounded-lg overflow-hidden max-h-60 overflow-y-auto",
+        style := "position: absolute; top: 100%; left: 0;", // Position directly below
+
         div(
           cls := "py-1",
           // Render each option
